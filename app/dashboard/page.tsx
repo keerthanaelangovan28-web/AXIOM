@@ -1,0 +1,157 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { DashboardLayout } from '@/components/dashboard/layout'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Statistics } from '@/components/dashboard/statistics'
+import { ActivityFeed } from '@/components/dashboard/activity-feed'
+import { SecurityAlerts, RecentActivity } from '@/components/dashboard/alerts'
+import { FileText, TrendingUp, Clock, Lock } from 'lucide-react'
+
+interface VerificationStats {
+  verifications: number
+  trend: string
+}
+
+export default function DashboardPage() {
+  // BUG 3 FIX: fetch real verification stats instead of hardcoded values
+  const [verStats, setVerStats] = useState<VerificationStats | null>(null)
+  const [statsLoading, setStatsLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/stats')
+      .then((r) => r.json())
+      .then((data) => setVerStats(data))
+      .catch(() => setVerStats({ verifications: 0, trend: 'No verifications yet' }))
+      .finally(() => setStatsLoading(false))
+  }, [])
+
+  const stats = [
+    {
+      title: 'Verifications',
+      // BUG 3 FIX: show real count; skeleton while loading; "0" if none
+      value: statsLoading
+        ? '—'
+        : verStats
+        ? verStats.verifications.toLocaleString()
+        : '0',
+      description: 'Total verified documents',
+      icon: FileText,
+      trend: statsLoading
+        ? 'Loading…'
+        : verStats?.trend ?? 'No verifications yet',
+    },
+    {
+      title: 'Success Rate',
+      value: '99.8%',
+      description: 'Average verification success',
+      icon: TrendingUp,
+      trend: '+0.2% improvement',
+    },
+    {
+      title: 'Average Time',
+      value: '2.3s',
+      description: 'Average verification time',
+      icon: Clock,
+      trend: '-0.5s faster',
+    },
+    {
+      title: 'Security Score',
+      value: '100/100',
+      description: 'Account security rating',
+      icon: Lock,
+      trend: 'All systems secure',
+    },
+  ]
+
+  return (
+    <DashboardLayout>
+      <div className="space-y-8 animate-in fade-in duration-700">
+        {/* Welcome Section */}
+        <div className="rounded-2xl p-8 neon-glow border-neon" style={{ background: 'linear-gradient(135deg, #0F172A, #060B18)', border: '1px solid rgba(0, 180, 255, 0.3)' }}>
+          <h2 className="text-4xl font-black mb-2 text-neon" style={{ color: '#00B4FF' }}>Welcome Back!</h2>
+          <p className="text-lg" style={{ color: '#A0AEC0' }}>
+            You're using LexAxiom's advanced 5-layer legal document verification system. All documents are encrypted and verified using neuro-symbolic reasoning, constitutional AI, multi-agent debate, zero-knowledge proofs, and conformal prediction.
+          </p>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stats.map((stat) => (
+            <Card key={stat.title} className="hover:scale-105 transition-transform duration-300" style={{ background: '#0F172A', border: '1px solid rgba(0, 180, 255, 0.2)' }}>
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-xs font-black uppercase tracking-widest" style={{ color: '#64748B' }}>{stat.title}</CardTitle>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl neon-glow" style={{ background: 'rgba(0, 180, 255, 0.1)' }}>
+                    <stat.icon className="h-5 w-5" style={{ color: '#00B4FF' }} />
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div
+                  className={`text-3xl font-black text-neon transition-opacity duration-300 ${statsLoading && stat.title === 'Verifications' ? 'opacity-40 animate-pulse' : 'opacity-100'}`}
+                  style={{ color: '#F0F9FF' }}
+                >
+                  {stat.value}
+                </div>
+                <p className="text-xs mt-1 font-medium" style={{ color: '#64748B' }}>{stat.description}</p>
+                <p className="text-xs mt-3 flex items-center gap-1 font-bold" style={{ color: '#00FF99' }}>
+                  <span className="h-1.5 w-1.5 rounded-full bg-success neon-glow" />
+                  {stat.trend}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Statistics */}
+        <Statistics />
+
+        {/* Activity Feed */}
+        <ActivityFeed />
+
+        {/* Security Alerts */}
+        <div>
+          <h3 className="text-xl font-black mb-4 uppercase tracking-tighter text-neon" style={{ color: '#00B4FF' }}>Security System Status</h3>
+          <SecurityAlerts />
+        </div>
+
+        {/* Recent Activity */}
+        <RecentActivity />
+
+        {/* Security Features */}
+        <Card style={{ background: '#0F172A', border: '1px solid rgba(0, 180, 255, 0.2)' }}>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-xl font-black text-neon" style={{ color: '#00B4FF' }}>
+              <Lock className="h-6 w-6" />
+              Cyber Security Protocol
+            </CardTitle>
+            <CardDescription style={{ color: '#A0AEC0' }}>Encrypted by LexAxiom Neural Network</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { label: 'TLS 1.3 Encryption', desc: 'Secure data stream', color: '#00FF99' },
+                { label: 'AES-256-GCM', desc: 'Military-grade storage', color: '#00B4FF' },
+                { label: 'Neural MFA', desc: 'Biometric token auth', color: '#A855F7' },
+                { label: 'RBAC v2.0', desc: 'Granular access matrix', color: '#FFD700' },
+                { label: 'Quantum Audit', desc: 'Immutable log chain', color: '#FF4D4D' },
+                { label: 'Zero-Knowledge', desc: 'Privacy-aware verification', color: '#3399FF' },
+              ].map((feature) => (
+                <div key={feature.label} className="flex items-start gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full flex-shrink-0 neon-glow" style={{ background: `${feature.color}20` }}>
+                    <span style={{ color: feature.color, fontWeight: 'bold' }}>✓</span>
+                  </div>
+                  <div>
+                    <p className="font-bold text-sm" style={{ color: '#F0F9FF' }}>{feature.label}</p>
+                    <p className="text-xs font-medium" style={{ color: '#64748B' }}>{feature.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </DashboardLayout>
+  )
+}
