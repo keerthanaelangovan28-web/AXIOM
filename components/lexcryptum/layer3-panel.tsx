@@ -12,52 +12,53 @@ export function Layer3Panel({ result }: Layer3PanelProps) {
   const [expandedAgent, setExpandedAgent] = useState<number | null>(null)
 
   return (
-    <div className="animate-fade-in-up rounded-xl border border-border bg-card p-5">
+    <div className="animate-fade-in-up rounded-xl border p-5" style={{ background: '#0F1629', borderColor: 'rgba(245, 158, 11, 0.2)' }}>
       <div className="mb-4 flex items-center gap-2">
-        <Users className="h-4 w-4 text-warning" />
-        <h3 className="text-sm font-semibold text-foreground">Layer 3: Multi-Agent Debate</h3>
-        <span className={`ml-auto rounded-full px-2 py-0.5 text-[10px] font-bold ${result.finalVerdict === "VERIFIED"
-            ? "bg-success/10 text-success"
-            : result.finalVerdict === "UNCERTAIN"
-              ? "bg-warning/10 text-warning"
-              : "bg-destructive/10 text-destructive"
-          }`}>
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.3)' }}>
+          <Users className="h-5 w-5" style={{ color: '#F59E0B' }} />
+        </div>
+        <h3 className="text-sm font-black tracking-tight" style={{ color: '#E2E8F0', fontFamily: 'Playfair Display, serif' }}>
+          Layer 3: Multi-Agent Debate
+        </h3>
+        <span className={`ml-auto rounded-full px-2 py-0.5 text-[10px] font-bold ${
+          result.finalVerdict === "VERIFIED" ? "bg-success/10 text-success"
+          : result.finalVerdict === "UNCERTAIN" ? "bg-warning/10 text-warning"
+          : "bg-destructive/10 text-destructive"
+        }`}>
           CFI: {result.cfiScore.toFixed(3)}
         </span>
       </div>
 
       <div className="flex flex-col gap-3">
-        {/* Agents */}
         {result.agents.map((agent, i) => (
-          <div key={i} className="rounded-lg border border-border bg-secondary">
+          <div key={i} className="rounded-lg border" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.06)' }}>
             <button
               type="button"
               onClick={() => setExpandedAgent(expandedAgent === i ? null : i)}
               className="flex w-full items-center gap-3 px-3 py-2.5"
             >
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-[10px] font-bold text-foreground">
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-bold"
+                style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', border: '1px solid rgba(245,158,11,0.3)' }}>
                 {i + 1}
               </div>
               <div className="min-w-0 flex-1 text-left">
-                <p className="text-xs font-semibold text-foreground">{agent.name}</p>
-                <p className="text-[10px] text-muted-foreground">{agent.role}</p>
+                <p className="text-xs font-semibold" style={{ color: '#E2E8F0' }}>{agent.name}</p>
+                <p className="text-[10px]" style={{ color: '#64748B' }}>{agent.role}</p>
               </div>
-              <span className="mr-2 text-[10px] font-mono font-bold text-primary">
+              <span className="mr-2 text-[10px] font-mono font-bold" style={{ color: '#F59E0B' }}>
                 {agent.score.toFixed(2)}
               </span>
-              {expandedAgent === i ? (
-                <ChevronUp className="h-3.5 w-3.5 text-muted-foreground" />
-              ) : (
-                <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
-              )}
+              {expandedAgent === i
+                ? <ChevronUp className="h-3.5 w-3.5" style={{ color: '#64748B' }} />
+                : <ChevronDown className="h-3.5 w-3.5" style={{ color: '#64748B' }} />}
             </button>
             {expandedAgent === i && (
-              <div className="border-t border-border px-3 py-3">
-                <p className="mb-2 text-[10px] leading-relaxed text-foreground">{agent.reasoning}</p>
+              <div className="border-t px-3 py-3" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+                <p className="mb-2 text-[10px] leading-relaxed" style={{ color: '#E2E8F0' }}>{agent.reasoning}</p>
                 <div className="flex flex-col gap-1">
                   {agent.findings.map((f, fi) => (
                     <div key={fi} className="flex items-start gap-1.5">
-                      <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                      <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: '#F59E0B' }} />
                       <p className="text-[10px] text-muted-foreground">{f}</p>
                     </div>
                   ))}
@@ -66,7 +67,6 @@ export function Layer3Panel({ result }: Layer3PanelProps) {
             )}
           </div>
         ))}
-
       </div>
     </div>
   )

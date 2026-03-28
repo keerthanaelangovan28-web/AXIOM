@@ -21,18 +21,22 @@ export function ThemeToggle() {
       size="icon"
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      className="h-10 w-10 rounded-full transition-colors duration-200"
+      className="h-10 w-10 rounded-full transition-all duration-200"
       style={{
-        color: isDark ? '#00B4FF' : '#0369a1',
+        color: '#F97316',
         background: 'transparent',
       }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLElement).style.background = isDark
-          ? '#1E293B'
-          : '#F1F5F9'
+          ? 'rgba(249, 115, 22, 0.12)'
+          : '#FFF7ED'
+        ;(e.currentTarget as HTMLElement).style.boxShadow = isDark
+          ? '0 0 12px rgba(249, 115, 22, 0.2)'
+          : 'none'
       }}
       onMouseLeave={(e) => {
         (e.currentTarget as HTMLElement).style.background = 'transparent'
+        ;(e.currentTarget as HTMLElement).style.boxShadow = 'none'
       }}
     >
       {isDark ? (

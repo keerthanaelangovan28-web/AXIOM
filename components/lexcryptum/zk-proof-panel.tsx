@@ -49,9 +49,9 @@ function CopyBtn({ value }: { value: string }) {
   return (
     <button onClick={copy} className="ml-2 opacity-60 hover:opacity-100 transition-opacity">
       {copied ? (
-        <CheckCircle className="h-3.5 w-3.5 text-emerald-400" />
+        <CheckCircle className="h-3.5 w-3.5" style={{ color: '#22C55E' }} />
       ) : (
-        <Copy className="h-3.5 w-3.5 text-slate-400" />
+        <Copy className="h-3.5 w-3.5" style={{ color: '#64748B' }} />
       )}
     </button>
   )
@@ -75,7 +75,7 @@ export function ZKProofPanel({ documentContent, verificationScore, onProofGenera
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          documentContent: documentContent.slice(0, 50000), // cap size
+          documentContent: documentContent.slice(0, 50000),
           verificationScore,
           minScore: 80,
         }),
@@ -91,22 +91,27 @@ export function ZKProofPanel({ documentContent, verificationScore, onProofGenera
     }
   }
 
+  const dataBoxStyle = {
+    background: 'rgba(201, 168, 76, 0.05)',
+    border: '1px solid rgba(201, 168, 76, 0.15)',
+  }
+
   return (
     <div
       className="rounded-2xl border p-5 space-y-4"
-      style={{ background: '#0A1628', borderColor: 'rgba(0,180,255,0.2)' }}
+      style={{ background: '#0F1629', borderColor: 'rgba(201, 168, 76, 0.2)' }}
     >
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div
             className="flex h-8 w-8 items-center justify-center rounded-lg"
-            style={{ background: 'linear-gradient(135deg, #00B4FF22, #3399FF22)', border: '1px solid rgba(0,180,255,0.4)' }}
+            style={{ background: 'rgba(124, 58, 237, 0.15)', border: '1px solid rgba(124, 58, 237, 0.4)' }}
           >
-            <Zap className="h-4 w-4" style={{ color: '#00B4FF' }} />
+            <Zap className="h-4 w-4" style={{ color: '#7C3AED' }} />
           </div>
           <div>
-            <h3 className="text-sm font-black tracking-tight" style={{ color: '#F0F9FF' }}>
+            <h3 className="text-sm font-black tracking-tight" style={{ color: '#E2E8F0', fontFamily: 'Playfair Display, serif' }}>
               Zero-Knowledge Proof
             </h3>
             <p className="text-[10px]" style={{ color: '#64748B' }}>
@@ -118,9 +123,9 @@ export function ZKProofPanel({ documentContent, verificationScore, onProofGenera
           <span
             className="text-[10px] font-bold px-2 py-1 rounded-full"
             style={{
-              background: proof.isValid ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)',
-              color: proof.isValid ? '#10B981' : '#EF4444',
-              border: `1px solid ${proof.isValid ? 'rgba(16,185,129,0.4)' : 'rgba(239,68,68,0.4)'}`,
+              background: proof.isValid ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)',
+              color: proof.isValid ? '#22C55E' : '#EF4444',
+              border: `1px solid ${proof.isValid ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.4)'}`,
             }}
           >
             {proof.isValid ? '✓ PROOF VALID' : '✗ PROOF INVALID'}
@@ -132,61 +137,56 @@ export function ZKProofPanel({ documentContent, verificationScore, onProofGenera
       <div className="grid grid-cols-3 gap-2">
         {[
           { icon: Shield, label: 'Circuit', value: 'DocumentVerifier_v1' },
-          { icon: Lock, label: 'Scheme', value: 'Groth16 / BN128' },
-          { icon: Hash, label: 'Threshold', value: `${80}/100` },
+          { icon: Lock,   label: 'Scheme',  value: 'Groth16 / BN128' },
+          { icon: Hash,   label: 'Threshold', value: '80/100' },
         ].map(({ icon: Icon, label, value }) => (
-          <div
-            key={label}
-            className="rounded-lg p-2.5 text-center"
-            style={{ background: 'rgba(0,180,255,0.05)', border: '1px solid rgba(0,180,255,0.1)' }}
-          >
-            <Icon className="h-3.5 w-3.5 mx-auto mb-1" style={{ color: '#00B4FF' }} />
+          <div key={label} className="rounded-lg p-2.5 text-center" style={dataBoxStyle}>
+            <Icon className="h-3.5 w-3.5 mx-auto mb-1" style={{ color: '#7C3AED' }} />
             <p className="text-[9px] font-bold uppercase tracking-wider mb-0.5" style={{ color: '#64748B' }}>{label}</p>
-            <p className="text-[10px] font-bold" style={{ color: '#F0F9FF' }}>{value}</p>
+            <p className="text-[10px] font-bold" style={{ color: '#E2E8F0' }}>{value}</p>
           </div>
         ))}
       </div>
 
       {/* Error */}
       {error && (
-        <Alert className="border-red-500/40 bg-red-950/20 py-2">
-          <XCircle className="h-4 w-4 text-red-400" />
-          <AlertDescription className="text-red-400 text-xs">{error}</AlertDescription>
+        <Alert style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.3)' }}>
+          <XCircle className="h-4 w-4" style={{ color: '#EF4444' }} />
+          <AlertDescription style={{ color: '#FCA5A5' }} className="text-xs">{error}</AlertDescription>
         </Alert>
       )}
 
       {/* Generated proof display */}
       {proof ? (
         <div className="space-y-3">
-          {/* Key fields */}
           {[
             { label: 'Document Hash (SHA-256)', value: proof.documentHash, hint: 'Real cryptographic hash of your document' },
             { label: 'Nullifier (HMAC-SHA256)', value: proof.nullifier, hint: 'Prevents double-verification' },
             { label: 'Score Commitment', value: proof.commitment, hint: 'Pedersen commitment hiding the score' },
           ].map(({ label, value, hint }) => (
-            <div key={label} className="rounded-lg p-3" style={{ background: 'rgba(0,180,255,0.05)', border: '1px solid rgba(0,180,255,0.1)' }}>
+            <div key={label} className="rounded-lg p-3" style={dataBoxStyle}>
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: '#64748B' }}>{label}</span>
                 <CopyBtn value={value} />
               </div>
-              <code className="text-[11px] font-mono break-all" style={{ color: '#38BDF8' }}>{value}</code>
+              <code className="text-[11px] font-mono break-all" style={{ color: '#C9A84C' }}>{value}</code>
               <p className="text-[9px] mt-1" style={{ color: '#475569' }}>{hint}</p>
             </div>
           ))}
 
           {/* Public signals */}
-          <div className="rounded-lg p-3" style={{ background: 'rgba(0,180,255,0.05)', border: '1px solid rgba(0,180,255,0.1)' }}>
+          <div className="rounded-lg p-3" style={dataBoxStyle}>
             <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: '#64748B' }}>Public Signals</span>
             <div className="mt-2 space-y-1">
               {[
-                { i: 0, name: 'isValid', desc: 'Proof passes threshold check' },
+                { i: 0, name: 'isValid',   desc: 'Proof passes threshold check' },
                 { i: 1, name: 'nullifier', desc: 'Unique per verification' },
-                { i: 2, name: 'minScore', desc: 'Public score threshold' },
-              ].map(({ i, name, desc }) => (
+                { i: 2, name: 'minScore',  desc: 'Public score threshold' },
+              ].map(({ i, name }) => (
                 <div key={i} className="flex items-center gap-2">
                   <span className="text-[10px] font-mono w-4 text-center" style={{ color: '#64748B' }}>[{i}]</span>
                   <span className="text-[10px]" style={{ color: '#94A3B8' }}>{name}:</span>
-                  <code className="text-[10px] font-mono flex-1 truncate" style={{ color: '#38BDF8' }}>
+                  <code className="text-[10px] font-mono flex-1 truncate" style={{ color: '#C9A84C' }}>
                     {truncate(proof.publicSignals[i] || '', 30)}
                   </code>
                 </div>
@@ -208,15 +208,15 @@ export function ZKProofPanel({ documentContent, verificationScore, onProofGenera
           <button
             onClick={() => setShowRawProof(v => !v)}
             className="flex items-center gap-1 text-[10px] font-bold transition-colors"
-            style={{ color: '#00B4FF' }}
+            style={{ color: '#7C3AED' }}
           >
             {showRawProof ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             {showRawProof ? 'Hide' : 'Show'} raw Groth16 proof
           </button>
 
           {showRawProof && (
-            <div className="rounded-lg p-3 overflow-auto max-h-48" style={{ background: '#030712', border: '1px solid rgba(0,180,255,0.15)' }}>
-              <pre className="text-[9px] font-mono" style={{ color: '#38BDF8' }}>
+            <div className="rounded-lg p-3 overflow-auto max-h-48" style={{ background: '#080C18', border: '1px solid rgba(124,58,237,0.2)' }}>
+              <pre className="text-[9px] font-mono" style={{ color: '#7C3AED' }}>
                 {JSON.stringify(proof.proof, null, 2)}
               </pre>
             </div>
@@ -227,7 +227,8 @@ export function ZKProofPanel({ documentContent, verificationScore, onProofGenera
             onClick={generateProof}
             variant="outline"
             size="sm"
-            className="w-full text-xs border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 bg-transparent"
+            className="w-full text-xs bg-transparent"
+            style={{ borderColor: 'rgba(124,58,237,0.4)', color: '#7C3AED' }}
           >
             Regenerate Proof
           </Button>
@@ -237,7 +238,7 @@ export function ZKProofPanel({ documentContent, verificationScore, onProofGenera
           onClick={generateProof}
           disabled={isGenerating}
           className="w-full font-bold gap-2"
-          style={{ background: 'linear-gradient(135deg, #00B4FF, #3399FF)', color: '#030712' }}
+          style={{ background: 'linear-gradient(135deg, #7C3AED, #A855F7)', color: '#fff' }}
         >
           {isGenerating ? (
             <span className="flex items-center gap-2">
@@ -256,7 +257,6 @@ export function ZKProofPanel({ documentContent, verificationScore, onProofGenera
         </Button>
       )}
 
-      {/* Info note */}
       {!proof && (
         <p className="text-[10px] text-center" style={{ color: '#475569' }}>
           Uses SHA-256 document commitments + HMAC nullifiers — mathematically proven, not simulated

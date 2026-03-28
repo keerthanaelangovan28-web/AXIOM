@@ -93,11 +93,11 @@ export function InputSection({ onVerify, isProcessing }: InputSectionProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border p-6 neon-border transition-all duration-500" style={{ background: '#0F172A', borderColor: 'rgba(0, 180, 255, 0.2)' }}>
+    <div className="flex flex-col gap-4 rounded-2xl border p-6 transition-all duration-500" style={{ background: '#0F1629', borderColor: 'rgba(201, 168, 76, 0.2)' }}>
       {/* Header row — title only */}
       <div className="flex items-center gap-3">
-        <FileText className="h-5 w-5 shrink-0" style={{ color: '#00B4FF' }} />
-        <h2 className="text-lg font-black tracking-tight leading-tight" style={{ color: '#00B4FF' }}>Neural Document Analysis</h2>
+        <FileText className="h-5 w-5 shrink-0" style={{ color: '#C9A84C' }} />
+        <h2 className="text-lg font-black tracking-tight leading-tight" style={{ color: '#C9A84C', fontFamily: 'Playfair Display, serif' }}>Document Verification</h2>
       </div>
 
       {/* BUG 4 FIX: buttons centered below header, equal width, primary + ghost */}
@@ -112,8 +112,8 @@ export function InputSection({ onVerify, isProcessing }: InputSectionProps) {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
         <Button
           onClick={() => fileInputRef.current?.click()}
-          className="w-full max-w-xs gap-2 font-bold neon-glow"
-          style={{ background: 'linear-gradient(135deg, #00B4FF, #3399FF)', color: '#030712' }}
+          className="w-full max-w-xs gap-2 font-bold"
+          style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C87A)', color: '#0A0E1A' }}
         >
           <Upload className="h-4 w-4" />
           Upload Files
@@ -121,7 +121,8 @@ export function InputSection({ onVerify, isProcessing }: InputSectionProps) {
         <Button
           variant="outline"
           onClick={loadSampleData}
-          className="w-full max-w-xs gap-2 font-bold border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10 hover:text-cyan-300 bg-transparent"
+          className="w-full max-w-xs gap-2 font-bold bg-transparent"
+          style={{ borderColor: 'rgba(201, 168, 76, 0.4)', color: '#C9A84C' }}
         >
           View Sample Data
         </Button>

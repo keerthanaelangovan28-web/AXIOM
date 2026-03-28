@@ -1,13 +1,12 @@
 import React from "react"
 import type { Metadata, Viewport } from 'next'
-import { Inter, JetBrains_Mono } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
 import { Providers } from './providers'
 
 import './globals.css'
 
 const _inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
-const _jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains-mono' })
 
 export const metadata: Metadata = {
   title: 'LexAxiom | Secure Legal Document Verification',
@@ -40,7 +39,7 @@ export default function RootLayout({
         <meta name="description" content="Enterprise-grade legal document verification with 5-layer AI verification, end-to-end encryption, and role-based access control." />
         <meta name="theme-color" content="#0f172a" />
       </head>
-      <body className={`${_inter.variable} ${_jetbrainsMono.variable} font-sans antialiased`}>
+      <body className={`${_inter.variable} font-sans antialiased`}>
         <Providers>
           {children}
           <Toaster />

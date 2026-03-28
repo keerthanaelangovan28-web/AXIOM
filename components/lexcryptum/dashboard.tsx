@@ -10,6 +10,7 @@ import { Layer3Panel } from "./layer3-panel"
 import { Layer4Panel } from "./layer4-panel"
 import { Layer5Panel } from "./layer5-panel"
 import { VerdictBadge } from "./verdict-badge"
+import { ConfidenceGauge } from "./confidence-gauge"
 import { FaithfulnessHeatmap } from "./faithfulness-heatmap"
 import { CertificatePanel } from "./certificate-panel"
 import { VulnerabilityDashboard } from "./vulnerability-dashboard"
@@ -94,6 +95,25 @@ export function LexcryptumDashboard() {
         // Apply hackathon integrity hashing
         return addIntegrityToResult(finalResult)
       })
+      // Persist to history (Feature #4)
+      setResult((prev) => {
+        if (prev.overallStatus === 'complete' && prev.overallVerdict) {
+          try {
+            const existing = JSON.parse(localStorage.getItem('lexaxiom_history') || '[]')
+            const entry = {
+              id: Date.now(),
+              timestamp: new Date().toISOString(),
+              query: query.slice(0, 120),
+              verdict: prev.overallVerdict,
+              cfiScore: prev.layer3?.cfiScore ?? 0,
+              constitutionalScore: prev.layer2?.score ?? 0,
+              coverage: prev.layer5?.coverageGuarantee ?? 0,
+            }
+            localStorage.setItem('lexaxiom_history', JSON.stringify([entry, ...existing].slice(0, 50)))
+          } catch (e) { /* ignore storage errors */ }
+        }
+        return prev
+      })
       updateLayerStatus(4, "complete")
 
       // Generate heatmap
@@ -123,14 +143,24 @@ export function LexcryptumDashboard() {
 
             {/* Right Column - Results */}
             <div className="flex flex-col gap-6 lg:col-span-8">
-              {/* Verdict */}
+              {/* Verdict + Gauge row */}
               {isComplete && result.overallVerdict && (
-                <VerdictBadge
-                  verdict={result.overallVerdict}
-                  cfiScore={result.layer3?.cfiScore}
-                  constitutionalScore={result.layer2?.score}
-                  coverage={result.layer5?.coverageGuarantee}
-                />
+                <div className="flex flex-col lg:flex-row gap-4">
+                  <div className="flex-1">
+                    <VerdictBadge
+                      verdict={result.overallVerdict}
+                      cfiScore={result.layer3?.cfiScore}
+                      constitutionalScore={result.layer2?.score}
+                      coverage={result.layer5?.coverageGuarantee}
+                    />
+                  </div>
+                  <div className="lg:w-56 shrink-0">
+                    <ConfidenceGauge
+                      cfiScore={result.layer3?.cfiScore ?? 0}
+                      verdict={result.overallVerdict}
+                    />
+                  </div>
+                </div>
               )}
 
               {/* Exploit Dashboard - Hackathon Special */}

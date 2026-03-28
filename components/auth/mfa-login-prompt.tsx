@@ -58,24 +58,24 @@ export function MFALoginPrompt({ userId, onSuccess, onCancel }: MFALoginPromptPr
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4" style={{ background: '#030712' }}>
+    <div className="flex min-h-screen items-center justify-center px-4" style={{ background: '#0A0E1A' }}>
       <Card
-        className="w-full max-w-sm shadow-2xl neon-border"
-        style={{ background: '#0F172A', border: '1px solid rgba(0, 180, 255, 0.3)' }}
+        className="w-full max-w-sm shadow-2xl"
+        style={{ background: '#0F1629', border: '1px solid rgba(201, 168, 76, 0.25)' }}
       >
         <CardHeader className="space-y-4">
           <div className="flex items-center justify-center mb-2">
             <div
-              className="flex h-16 w-16 items-center justify-center rounded-2xl neon-glow"
-              style={{ background: 'linear-gradient(135deg, #00B4FF, #3399FF)' }}
+              className="flex h-16 w-16 items-center justify-center rounded-2xl gold-glow"
+              style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C87A)' }}
             >
               <Smartphone className="h-8 w-8 text-white" />
             </div>
           </div>
-          <CardTitle className="text-center text-2xl font-black tracking-tighter" style={{ color: '#00B4FF' }}>
+          <CardTitle className="text-center text-2xl font-black tracking-tighter" style={{ color: '#C9A84C', fontFamily: 'Playfair Display, serif' }}>
             Two-Factor Auth
           </CardTitle>
-          <CardDescription className="text-center" style={{ color: '#A0AEC0' }}>
+          <CardDescription className="text-center" style={{ color: '#64748B' }}>
             {isBackupMode
               ? 'Enter one of your backup codes'
               : 'Enter the 6-digit code from your authenticator app'}
@@ -99,7 +99,8 @@ export function MFALoginPrompt({ userId, onSuccess, onCancel }: MFALoginPromptPr
                       <InputOTPSlot
                         key={i}
                         index={i}
-                        className="h-12 w-12 text-lg border-slate-600 bg-slate-800 text-white"
+                        className="h-12 w-12 text-lg"
+                        style={{ background: '#0A0E1A', borderColor: 'rgba(201,168,76,0.3)', color: '#E2E8F0' }}
                       />
                     ))}
                   </InputOTPGroup>
@@ -110,7 +111,7 @@ export function MFALoginPrompt({ userId, onSuccess, onCancel }: MFALoginPromptPr
                 onClick={verifyCode}
                 disabled={isLoading || token.length !== 6}
                 className="w-full font-bold"
-                style={{ background: 'linear-gradient(135deg, #00B4FF, #3399FF)', color: '#030712' }}
+                style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C87A)', color: '#0A0E1A' }}
               >
                 {isLoading ? (
                   <span className="flex items-center gap-2">
@@ -138,16 +139,16 @@ export function MFALoginPrompt({ userId, onSuccess, onCancel }: MFALoginPromptPr
                 maxLength={8}
                 className="w-full rounded-lg border px-4 py-3 text-center font-mono text-sm tracking-widest"
                 style={{
-                  background: '#0F172A',
-                  borderColor: 'rgba(0,180,255,0.3)',
-                  color: '#38BDF8',
+                  background: '#0A0E1A',
+                  borderColor: 'rgba(201,168,76,0.3)',
+                  color: '#C9A84C',
                 }}
               />
               <Button
                 onClick={verifyCode}
                 disabled={isLoading || backupCode.length < 6}
                 className="w-full font-bold"
-                style={{ background: 'linear-gradient(135deg, #00B4FF, #3399FF)', color: '#030712' }}
+                style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C87A)', color: '#0A0E1A' }}
               >
                 {isLoading ? 'Verifying…' : 'Use Backup Code'}
               </Button>

@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 body {
   font-family: 'Inter', Arial, Helvetica, sans-serif;
@@ -19,98 +20,106 @@ body {
   }
 }
 
+/* ============================================================
+   LEX AXIOM — Legal Vault Design Token System (styles/globals.css)
+   Kept in sync with app/globals.css
+   ============================================================ */
+
 @layer base {
   :root {
-    /* LexAxiom Neon Blue Theme */
-    --background: 222 47% 6%;
-    /* #030712 Near-Black Blue */
-    --foreground: 210 100% 96%;
-    /* #F0F9FF Ice White */
-
-    --card: 217 60% 12%;
-    /* #0F172A Deep Ocean */
-    --card-foreground: 210 100% 96%;
-    /* #F0F9FF */
-
-    --popover: 217 60% 12%;
-    /* #0F172A */
-    --popover-foreground: 210 100% 96%;
-
-    --primary: 199 100% 50%;
-    /* #00B4FF Electric Cyan */
-    --primary-foreground: 222 47% 6%;
-    /* Near-Black Blue */
-
-    --secondary: 217 32% 17%;
-    /* #1E293B Slate */
-    --secondary-foreground: 210 100% 96%;
-
-    --muted: 217 32% 17%;
-    /* #1E293B */
-    --muted-foreground: 215 20% 65%;
-    /* #A0AEC0 Steel Muted */
-
-    --accent: 214 100% 60%;
-    /* #3399FF Bright Azure */
-    --accent-foreground: 210 100% 96%;
-
+    /* ── Dark Mode Defaults (Legal Vault Navy + Gold) ── */
+    --background: 228 38% 8%;
+    --foreground: 214 32% 91%;
+    --card: 228 38% 11%;
+    --card-foreground: 214 32% 91%;
+    --popover: 228 38% 11%;
+    --popover-foreground: 214 32% 91%;
+    --primary: 43 55% 54%;              /* #C9A84C antique gold */
+    --primary-foreground: 228 38% 8%;
+    --secondary: 228 35% 14%;
+    --secondary-foreground: 214 32% 91%;
+    --muted: 228 30% 16%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 43 65% 68%;               /* #E8C87A light gold */
+    --accent-foreground: 228 38% 8%;
     --destructive: 0 100% 65%;
-    /* #FF4D4D Neon Red */
-    --destructive-foreground: 210 100% 96%;
-
-    --success: 160 100% 50%;
-    /* #00FF99 Cyber Mint */
-    --warning: 45 100% 50%;
-    /* #FFD700 Neon Gold */
+    --destructive-foreground: 0 0% 98%;
+    --success: 142 71% 45%;
+    --warning: 38 92% 50%;
     --error: 0 100% 65%;
-    /* #FF4D4D */
-
-    --border: 217 50% 20%;
-    /* #1E293B */
-    --input: 217 60% 10%;
-    /* #060B18 Deep Indigo */
-    --ring: 199 100% 50%;
-    /* #00B4FF */
-
+    --border: 43 35% 30%;
+    --input: 228 35% 14%;
+    --ring: 43 55% 54%;
     --radius: 0.75rem;
 
-    /* Sidebar - Vibrant Neon */
-    --sidebar-background: 222 47% 4%;
-    --sidebar-foreground: 210 100% 96%;
-    --sidebar-primary: 199 100% 50%;
-    --sidebar-primary-foreground: 222 47% 4%;
-    --sidebar-accent: 217 50% 15%;
-    --sidebar-accent-foreground: 210 100% 96%;
-    --sidebar-border: 217 50% 18%;
-    --sidebar-ring: 199 100% 50%;
+    /* ── Sidebar ── */
+    --sidebar-background: 228 38% 9%;
+    --sidebar-foreground: 214 32% 88%;
+    --sidebar-primary: 43 55% 54%;
+    --sidebar-primary-foreground: 228 38% 8%;
+    --sidebar-accent: 228 35% 14%;
+    --sidebar-accent-foreground: 214 32% 88%;
+    --sidebar-border: 43 35% 22%;
+    --sidebar-ring: 43 55% 54%;
   }
 
-  .dark {
-    /* Ensure dark mode matches for consistency */
-    --background: 222 47% 6%;
-    --foreground: 210 100% 96%;
-    --card: 217 60% 12%;
-    --card-foreground: 210 100% 96%;
-    --primary: 199 100% 50%;
-    --primary-foreground: 222 47% 6%;
-    --border: 217 50% 20%;
-    --ring: 199 100% 50%;
+  .dark,
+  [data-theme="dark"] {
+    --background: 228 38% 8%;
+    --foreground: 214 32% 91%;
+    --card: 228 38% 11%;
+    --card-foreground: 214 32% 91%;
+    --primary: 43 55% 54%;
+    --primary-foreground: 228 38% 8%;
+    --border: 43 35% 30%;
+    --ring: 43 55% 54%;
+  }
+
+  [data-theme="light"] {
+    --background: 43 40% 97%;
+    --foreground: 228 38% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 228 38% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 228 38% 12%;
+    --primary: 43 55% 44%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 43 40% 93%;
+    --secondary-foreground: 228 38% 12%;
+    --muted: 43 30% 91%;
+    --muted-foreground: 228 20% 40%;
+    --accent: 43 65% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --success: 142 71% 38%;
+    --warning: 38 92% 44%;
+    --error: 0 84% 60%;
+    --border: 43 50% 75%;
+    --input: 0 0% 100%;
+    --ring: 43 55% 44%;
+    --sidebar-background: 43 40% 94%;
+    --sidebar-foreground: 228 38% 12%;
+    --sidebar-primary: 43 55% 44%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 43 40% 88%;
+    --sidebar-accent-foreground: 228 38% 12%;
+    --sidebar-border: 43 50% 78%;
+    --sidebar-ring: 43 55% 44%;
   }
 }
 
 @layer utilities {
-  .neon-glow {
-    box-shadow: 0 0 15px rgba(0, 180, 255, 0.3), 0 0 5px rgba(0, 180, 255, 0.2);
+  /* Gold brand glow */
+  .gold-glow {
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.3), 0 0 8px rgba(201, 168, 76, 0.15);
   }
 
-  .neon-border {
-    border-color: rgba(0, 180, 255, 0.5);
-    box-shadow: 0 0 8px rgba(0, 180, 255, 0.2);
-  }
-
-  .text-neon {
-    text-shadow: 0 0 8px rgba(0, 180, 255, 0.5);
-  }
+  /* Legacy aliases updated to gold */
+  .neon-glow   { box-shadow: 0 0 15px rgba(201, 168, 76, 0.3), 0 0 5px rgba(201, 168, 76, 0.2); }
+  .neon-border { border-color: rgba(201, 168, 76, 0.4); box-shadow: 0 0 8px rgba(201, 168, 76, 0.2); }
+  .text-neon   { color: #C9A84C; }
+  .orange-glow { box-shadow: 0 0 20px rgba(201, 168, 76, 0.25), 0 0 8px rgba(201, 168, 76, 0.15); }
 }
 
 @layer base {
@@ -124,23 +133,14 @@ body {
     min-height: 100vh;
     width: 100%;
   }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
 }
 
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0B1120;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #1E293B;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #22D3EE;
-}
+/* Scrollbar Styling — gold */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: hsl(var(--background)); }
+::-webkit-scrollbar-thumb { background: rgba(201, 168, 76, 0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(201, 168, 76, 0.6); }

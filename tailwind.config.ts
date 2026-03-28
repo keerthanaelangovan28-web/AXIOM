@@ -64,6 +64,19 @@ const config: Config = {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        // ── Barrio Conecta Brand Tokens ──────────────────────
+        brand: {
+          orange:       '#F97316',  // Primary CTA & logo
+          'orange-light': '#FB923C', // Accent / dark-mode visibility
+          'orange-dark':  '#EA580C', // Hover / pressed state
+          'orange-deep':  '#C2410C', // Active state light mode
+          cream:        '#FEF7ED',  // Main light bg
+          'cream-hover': '#FFF7ED', // Card hover light bg
+          'cream-light': '#FFFBEB', // Muted surfaces
+          amber:        '#92400E',  // Subtitle text light mode
+          'amber-dark': '#7C2D12',  // Heading text light mode
+          border:       '#FDE68A',  // Soft yellow-orange divider
+        },
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
@@ -74,27 +87,32 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      boxShadow: {
+        // Orange-tinted warm shadows for light mode cards
+        'orange-sm':   '0 4px 6px -1px rgba(251, 146, 60, 0.10), 0 2px 4px -1px rgba(251, 146, 60, 0.06)',
+        'orange-md':   '0 6px 15px -3px rgba(249, 115, 22, 0.20), 0 4px 6px -2px rgba(249, 115, 22, 0.10)',
+        'orange-glow': '0 0 20px rgba(249, 115, 22, 0.25), 0 0 8px rgba(249, 115, 22, 0.15)',
+        // Dark mode elevation via border shift instead of shadow
+        'dark-card':   '0 0 0 1px rgba(75, 85, 99, 0.6)',
+      },
       keyframes: {
         'accordion-down': {
-          from: {
-            height: '0',
-          },
-          to: {
-            height: 'var(--radix-accordion-content-height)',
-          },
+          from: { height: '0' },
+          to:   { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
-          from: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-          to: {
-            height: '0',
-          },
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to:   { height: '0' },
+        },
+        'glow-orange-pulse': {
+          '0%, 100%': { boxShadow: '0 0 10px rgba(249, 115, 22, 0.30)' },
+          '50%':       { boxShadow: '0 0 25px rgba(249, 115, 22, 0.55)' },
         },
       },
       animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
+        'accordion-down':    'accordion-down 0.2s ease-out',
+        'accordion-up':      'accordion-up 0.2s ease-out',
+        'glow-orange':       'glow-orange-pulse 2s ease-in-out infinite',
       },
     },
   },
